@@ -18,9 +18,9 @@ const API = async <T = any,>(type: Method, url: string, data?: any) => {
   try {
     const apiresponse: AxiosResponse<T> = await axios(obj);
     return apiresponse;
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
-    return error as AxiosError;
+    return error;
   }
 };
 

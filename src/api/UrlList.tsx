@@ -1,4 +1,5 @@
-const isDev = import.meta.env.NODE_ENV === "development";
+const isDev = import.meta.env.MODE === "development";
+console.log(isDev);
 
 const development = {
   baseUrl: "https://dummyjson.com",

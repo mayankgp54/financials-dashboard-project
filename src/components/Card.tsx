@@ -1,18 +1,54 @@
+import { useEffect, useState } from "react";
+import { APILIST } from "../api/ApiList";
+import UrlList from "../api/UrlList";
+import { formatCurrency, formatPercentage } from "../utils/formatCurrency";
+interface CardData {
+  cost: number;
+  revenue: number;
+  labour: number;
+  material: number;
+  variation: number;
+  profit: number;
+  profitPct: number;
+}
 const Card = () => {
+  const [cardData, setCardData] = useState<CardData | null>(null);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        `${UrlList.baseUrl}/${APILIST.fetch_card_data}`,
+      );
+      const data = await response.json();
+      setCardData(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const cardConfig = [
+    { title: "Revenue", value: formatCurrency(cardData?.revenue) },
+    { title: "Cost", value: formatCurrency(cardData?.cost) },
+    { title: "Profit", value: formatCurrency(cardData?.profit) },
+    { title: "Profit Margin", value: formatPercentage(cardData?.profitPct) },
+    { title: "Material Cost", value: formatCurrency(cardData?.material) },
+    { title: "Labour Cost", value: formatCurrency(cardData?.labour) },
+    { title: "Variation", value: formatCurrency(cardData?.variation) },
+  ];
+
   return (
     <div className="grid grid-cols-7 gap-4 mb-6">
-      {[
-        ["Revenue", "£13,308.68"],
-        ["Cost", "£8,110.00"],
-        ["Profit", "£5,198.68"],
-        ["Profit Margin", "39%"],
-        ["Material Cost", "£10,020.00"],
-        ["Labour Cost", "£2,100.00"],
-        ["Variation", "£300.00"],
-      ].map(([title, value]) => (
-        <div key={title} className="bg-white rounded-xl p-4 shadow text-center">
-          <p className="text-gray-500 text-sm">{title}</p>
-          <p className="font-semibold text-lg">{value}</p>
+      {cardConfig.map((item) => (
+        <div
+          key={item.title}
+          className="bg-white rounded-xl p-4 shadow text-center"
+        >
+          <p className="text-gray-500 text-sm">{item.title}</p>
+          <p className="font-semibold text-lg">{item.value}</p>
         </div>
       ))}
     </div>
