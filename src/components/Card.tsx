@@ -2,15 +2,8 @@ import { useEffect, useState } from "react";
 import { APILIST } from "../api/ApiList";
 import UrlList from "../api/UrlList";
 import { formatCurrency, formatPercentage } from "../utils/formatCurrency";
-interface CardData {
-  cost: number;
-  revenue: number;
-  labour: number;
-  material: number;
-  variation: number;
-  profit: number;
-  profitPct: number;
-}
+import type { CardData } from "../types/interface";
+
 const Card = () => {
   const [cardData, setCardData] = useState<CardData | null>(null);
 
@@ -41,14 +34,14 @@ const Card = () => {
   ];
 
   return (
-    <div className="grid grid-cols-7 gap-4 mb-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4 mb-6">
       {cardConfig.map((item) => (
         <div
           key={item.title}
-          className="bg-white rounded-xl p-4 shadow text-center"
+          className="bg-white rounded-xl p-4 shadow text-center border border-gray-200"
         >
-          <p className="text-gray-500 text-sm">{item.title}</p>
-          <p className="font-semibold text-lg">{item.value}</p>
+          <p className="text-gray-500 text-sm font-semibold">{item.title}</p>
+          <p className="font-semibold text-sm">{item.value}</p>
         </div>
       ))}
     </div>
