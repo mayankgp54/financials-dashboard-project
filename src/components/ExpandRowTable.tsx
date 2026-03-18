@@ -105,7 +105,7 @@ export default function ExpandRowTable({ search }: { search: string }) {
   return (
     <div className="bg-white rounded-2xl shadow">
       <div className="overflow-x-auto">
-        <div className="min-w-[900px]">
+        <div className="min-w-225">
           {/*Table Header */}
           <div className="grid grid-cols-[2.5fr_repeat(8,1fr)_40px] px-6 py-3 text-xs font-semibold rounded-t-2xl text-gray-500 uppercase border border-gray-300 bg-gray-50 sticky top-0 z-10">
             {tableHeaders.map((header, index) => (
